@@ -17,6 +17,7 @@
     <script src="js/bootbox.min.js"></script>
 
 </head>
+<!-- Declare angular app and controller -->
 <body ng-app="OnlineUniversity">
     <div class="container" ng-controller="OnlineUniversityController">
         <header>
@@ -58,9 +59,9 @@
             </nav>
         </header>
         <main>
-			<h1>Profile</h1>
+            <h1>Profile</h1>
             <hr />
-			<form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="first-name">First Name</label>
                     <div class="col-sm-10">
@@ -90,15 +91,14 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                </div>
-			</form>
-			<h2>Courses Created</h2>
-			<table class="table table-striped">
+            </form>
+            <h2>Courses Created</h2>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Category</th>
                         <th>Created</th>
-                        <th>Description</th>
                         <th>
                             <button type="button" id="add" class="btn btn-success pull-right" ng-click="openNewCourseModal()">
                                 <span class="glyphicon glyphicon-plus"></span> 
@@ -106,17 +106,17 @@
                         </th>
                     </tr>
                 </thead>
-				<tbody id="courses">
+                <!-- Use ng-repeat to display course information -->
+                <tbody id="courses">
                     <tr ng-repeat="course in courses">
                         <td class="name">{{course.name}}</td>
                         <td class="category">{{course.category}}</td>
                         <td class="dateCreated">{{formatReadableDate(course.dateCreated)}}</td>
-                        <td class="description">{{course.description}}</td>
                         <td class="pull-right">
                             <button ng-click="openUpdateCourseModal($index)" type="button" class="btn btn-primary edit">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
-                            <button ng-click="remove($index)" type="button" class="btn btn-danger delete">
+                            <button ng-click="openRemoveModal($index)" type="button" class="btn btn-danger delete">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </td>
@@ -124,7 +124,30 @@
                 </tbody>
             </table>
         </main>
-       <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel" aria-hidden="true">
+
+        <!-- Initially hidden html for remove modal -->
+        <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Confirm Delete</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete "{{courseToRemove.name}}"?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button ng-click="remove()" type="button" class="btn btn-primary">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Initially hidden html for update/create modal -->
+        <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
